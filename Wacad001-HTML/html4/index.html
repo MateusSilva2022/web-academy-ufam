@@ -1,1 +1,119 @@
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário de Contato</title>
+
+    <style>
+        .container {
+            width: 600px;
+            margin: auto;
+        }
+
+        input, select, textarea {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Formulário de Contato</h1>
+
+    <p>
+        Por favor, preencha o formulário abaixo e clique no botão Enviar Mensagem.
+        Agradecemos por seu contato.
+    </p>
+
+    <form>
+
+        <fieldset>
+            <legend>Dados Básicos</legend>
+
+            Nome <input type="text"><br><br>
+
+            E-mail <input type="email" placeholder="seunome@dominio.com.br"><br><br>
+
+            Website <input type="url" value="http://">
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Seu curso no Instituto de Computação</legend>
+
+            <input type="radio" name="curso"> Ciência da Computação<br>
+            <input type="radio" name="curso"> Sistemas de Informação<br>
+            <input type="radio" name="curso"> Engenharia da Computação
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Assinale as linguagens já usadas por você:</legend>
+
+            Java <input type="checkbox">
+            C <input type="checkbox">
+            C++ <input type="checkbox">
+            Perl <input type="checkbox">
+            Python <input type="checkbox">
+            Javascript <input type="checkbox">
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Dados Complementares</legend>
+
+            Cor Favorita <input type="color"><br><br>
+
+            Data de Nascimento <input type="date"><br><br>
+
+            Ano de Entrada em seu Curso do IComp 
+            <input type="number" value="2000"><br><br>
+
+            Nota para este site 
+            <input type="range">
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Área de atuação</legend>
+
+            <select>
+                <option>Banco de Dados</option>
+                <option>Desenvolvimento Web</option>
+                <option>Redes</option>
+            </select>
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Submeta seu currículo vitae</legend>
+
+            <input type="file">
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Digite sua Mensagem</legend>
+
+            <textarea rows="5" cols="40">Este é o valor padrão!</textarea>
+        </fieldset>
+
+        <br>
+
+        <input type="reset" value="Resetar Dados">
+        <input type="submit" value="Enviar Mensagem">
+
+    </form>
+
+</div>
+
+</body>
+</html>
