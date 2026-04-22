@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.blue, .wrap-right, .yellow, .red, .green {
+    float: left;
+}
+
+.blue {
+    width: 100px;
+    height: 200px;
+    background-color: blue;
+}
+
+.wrap-right {
+    width: 200px;
+}
+
+.yellow {
+    width: 100px;
+    height: 100px;
+    background-color: yellow;
+}
+
+.red {
+    width: 100px;
+    height: 100px;
+    background-color: red;
+}
+
+.green {
+    width: 200px;
+    height: 100px;
+    background-color: green;
+}
