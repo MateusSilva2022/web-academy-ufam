@@ -1,1 +1,27 @@
+body {
+    background-color: #f2f2f2;
+    font-family: "Times New Roman", serif;
 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+
+    padding-top: 100px;
+}
+
+.caixa {
+    width: 550px;
+    padding: 25px;
+
+    background-color: #d9d9d9;
+
+    border: 12px solid black;
+    border-radius: 60px;
+}
+
+p {
+    margin: 0;
+    text-align: justify;
+    font-size: 18px;
+}
