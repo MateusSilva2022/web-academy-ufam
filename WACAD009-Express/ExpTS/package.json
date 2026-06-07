@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
-  "scripts": {
-    "start": "ts-node src/index.ts",
-    "build": "tsc",
-    "start:prod": "node build/index.js",
-    "lint": "eslint src",
-    "format": "prettier --write \"src/**/*.ts\""
-  },
+"scripts": {
+  "start": "ts-node src/index.ts",
+  "build": "tsc",
+  "start:prod": "node build/index.js",
+  "lint": "eslint src",
+  "format": "prettier --write \"src/**/*.ts\"",
+  "scss": "sass src/public/scss/style.scss src/public/css/style.css"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -32,6 +33,7 @@
     "eslint-config-prettier": "^10.1.8",
     "nodemon": "^3.1.14",
     "prettier": "^3.8.3",
+    "sass": "^1.100.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
