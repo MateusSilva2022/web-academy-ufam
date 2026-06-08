@@ -1,11 +1,15 @@
 import { Router } from "express";
 
 import { MainController } from "../controllers/MainController";
+import { ProdutoController } from "../controllers/ProdutoController";
 
 const router = Router();
 
 const controller =
     new MainController();
+
+const produtoController =
+    new ProdutoController();
 
 router.get(
     "/",
@@ -35,6 +39,11 @@ router.get(
 router.get(
     "/hb4",
     controller.hb4
+);
+
+router.get(
+    "/produto",
+    produtoController.listar
 );
 
 export default router;
