@@ -5,5 +5,5 @@ export class Aluno {
         public idade: number,
         public altura: number,
         public peso: number
-    ) {}
+    ) { }
 }

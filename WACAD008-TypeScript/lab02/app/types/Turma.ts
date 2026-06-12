@@ -1,16 +1,15 @@
 import { Aluno } from "./Aluno";
 
 export class Turma {
-    private alunos: Aluno[] = [];
 
     constructor(
         public id: number,
-        public nome: string
-    ) {}
+        public nome: string,
+        public alunos: Aluno[] = []
+    ) { }
 
-    adicionarAluno(aluno: Aluno): void {
+    adicionarAluno(aluno: Aluno) {
         this.alunos.push(aluno);
-        this.exibirEstatisticas();
     }
 
     editarAluno(
@@ -19,7 +18,7 @@ export class Turma {
         idade: number,
         altura: number,
         peso: number
-    ): void {
+    ) {
         const aluno = this.alunos.find(a => a.id === id);
 
         if (aluno) {
@@ -27,14 +26,16 @@ export class Turma {
             aluno.idade = idade;
             aluno.altura = altura;
             aluno.peso = peso;
-
-            this.exibirEstatisticas();
         }
     }
 
-    removerAluno(id: number): void {
-        this.alunos = this.alunos.filter(a => a.id !== id);
-        this.exibirEstatisticas();
+    removerAluno(id: number) {
+        const index = this.alunos.findIndex(a => a.id === id);
+        
+        if (index !== -1) {
+            this.alunos.splice(index, 1);
+        }
+        return this.alunos
     }
 
     getNumAlunos(): number {
@@ -72,14 +73,5 @@ export class Turma {
         );
 
         return soma / this.alunos.length;
-    }
-
-    exibirEstatisticas(): void {
-        console.log("\n===== ESTATÍSTICAS DA TURMA =====");
-        console.log(`Quantidade de alunos: ${this.getNumAlunos()}`);
-        console.log(`Média de idade: ${this.getMediaIdades().toFixed(2)}`);
-        console.log(`Média de altura: ${this.getMediaAlturas().toFixed(2)}`);
-        console.log(`Média de peso: ${this.getMediaPesos().toFixed(2)}`);
-        console.log("=================================\n");
     }
 }
