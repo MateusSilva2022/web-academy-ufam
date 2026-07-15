@@ -1,0 +1,17 @@
+version: "3.9" # Obsoleto (desnecessário para o docker-compose 3.9 ou superior)
+name: "wacad012" # Opcional, define o nome do projeto (padrão: nome do diretório se name estiver ausente)
+
+services:
+  backend:
+    build: ./backend
+    container_name: back # Nome do container (opcional, padrão: nome do serviço)
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build: ./frontend
+    container_name: front # Nome do container (opcional, padrão: nome do serviço)
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
