@@ -15,3 +15,9 @@ CMD ["nginx", "-g", "daemon off;"]
 # Comandos utilizados:
 # docker build -t mapeando-portas .
 # docker run -d --name mapeando-portas -p 7000:7000 mapeando-portas
+=======
+
+# Comandos utilizados:
+# docker build -t mapeando-portas .
+# docker run -d --name mapeando-portas -p 7000:7000 mapeando-portas
+
