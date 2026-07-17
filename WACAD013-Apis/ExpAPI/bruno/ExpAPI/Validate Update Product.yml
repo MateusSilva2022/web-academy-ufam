@@ -1,0 +1,18 @@
+info:
+  name: Validate Update Product
+  type: http
+  seq: 7
+
+http:
+  method: PUT
+  url: http://localhost:4455/v1/product/4485486a-2bc9-47be-93f9-fc2c29fe8125
+  body:
+    type: json
+    data: "{}"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

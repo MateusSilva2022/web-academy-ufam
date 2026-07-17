@@ -1,0 +1,23 @@
+info:
+  name: Create Product
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:4455/v1/product
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Mouse Gamer",
+        "price": 159.90,
+        "stock": 20
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
