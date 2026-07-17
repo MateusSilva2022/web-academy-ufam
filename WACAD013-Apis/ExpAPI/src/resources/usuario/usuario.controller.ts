@@ -1,17 +1,17 @@
 import { Request, Response } from 'express';
-import productService from './product.service';
+import usuarioService from './usuario.service';
 import {
-  createProductSchema,
-  updateProductSchema
-} from './product.schema';
+  createUsuarioSchema,
+  updateUsuarioSchema
+} from './usuario.schema';
 
 async function index(req: Request, res: Response) {
-  const products = await productService.index();
-  res.json(products);
+  const usuarios = await usuarioService.index();
+  res.json(usuarios);
 }
 
 async function create(req: Request, res: Response) {
-  const { error, value } = createProductSchema.validate(req.body, {
+  const { error, value } = createUsuarioSchema.validate(req.body, {
     abortEarly: false
   });
 
@@ -26,30 +26,33 @@ async function create(req: Request, res: Response) {
   }
 
   try {
-    const product = await productService.create(value);
-    res.status(201).json(product);
+    const usuario = await usuarioService.create(value);
+    res.status(201).json(usuario);
   } catch (error) {
+    console.error(error);
+
     res.status(400).json({
-      message: 'Não foi possível cadastrar o produto'
+      message: 'Não foi possível cadastrar o usuário',
+      error: error instanceof Error ? error.message : error
     });
   }
 }
 
 async function read(req: Request, res: Response) {
-  const product = await productService.read(req.params.id as string);
+  const usuario = await usuarioService.read(req.params.id as string);
 
-  if (!product) {
+  if (!usuario) {
     res.status(404).json({
-      message: 'Produto não encontrado'
+      message: 'Usuário não encontrado'
     });
     return;
   }
 
-  res.json(product);
+  res.json(usuario);
 }
 
 async function update(req: Request, res: Response) {
-  const { error, value } = updateProductSchema.validate(req.body, {
+  const { error, value } = updateUsuarioSchema.validate(req.body, {
     abortEarly: false
   });
 
@@ -64,26 +67,32 @@ async function update(req: Request, res: Response) {
   }
 
   try {
-    const product = await productService.update(
+    const usuario = await usuarioService.update(
       req.params.id as string,
       value
     );
 
-    res.json(product);
+    res.json(usuario);
   } catch (error) {
+    console.error(error);
+
     res.status(404).json({
-      message: 'Produto não encontrado'
+      message: 'Usuário não encontrado',
+      error: error instanceof Error ? error.message : error
     });
   }
 }
 
 async function remove(req: Request, res: Response) {
   try {
-    await productService.remove(req.params.id as string);
+    await usuarioService.remove(req.params.id as string);
     res.status(204).send();
   } catch (error) {
+    console.error(error);
+
     res.status(404).json({
-      message: 'Produto não encontrado'
+      message: 'Usuário não encontrado',
+      error: error instanceof Error ? error.message : error
     });
   }
 }
