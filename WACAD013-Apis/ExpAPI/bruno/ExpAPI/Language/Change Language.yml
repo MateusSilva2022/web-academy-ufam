@@ -1,0 +1,21 @@
+info:
+  name: Change Language
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:4455/v1/language
+  body:
+    type: json
+    data: |-
+      {
+        "lang": "en-US"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

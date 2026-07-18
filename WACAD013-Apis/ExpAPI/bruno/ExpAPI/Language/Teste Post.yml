@@ -1,0 +1,24 @@
+info:
+  name: Teste Post
+  type: http
+  seq: 15
+
+http:
+  method: POST
+  url: http://localhost:4455/v1/usuario
+  body:
+    type: json
+    data: |-
+      {
+        "tipoUsuarioId": "d90171c9-a589-4883-a0bb-027a32e0be23",
+        "nome": "Mateus Silva",
+        "email": "mateus@email.com",
+        "senha": "12345678"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,22 @@
+info:
+  name: Atualizar
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: http://localhost:4455/v1/usuario/975cb1df-f721-45a9-b489-fcaef5bef9cb
+  body:
+    type: json
+    data: |-
+      {
+        "nome": "Mateus Silva",
+        "email": "mateus.silva@email.com"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
