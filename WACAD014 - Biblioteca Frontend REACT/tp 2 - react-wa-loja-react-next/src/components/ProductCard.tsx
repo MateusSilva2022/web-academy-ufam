@@ -4,11 +4,13 @@ import { Product } from '../types/product'
 interface ProductCardProps {
   product: Product
   onAddToCart: (product: Product) => void
+  onAddToFavorite?: (product: Product) => void
 }
 
 export default function ProductCard({
   product,
   onAddToCart,
+  onAddToFavorite,
 }: ProductCardProps) {
   return (
     <div className="col">
@@ -32,6 +34,14 @@ export default function ProductCard({
           >
             Adicionar no carrinho
           </button>
+
+          {onAddToFavorite && <button
+            className="btn btn-primary d-block w-100"
+            style={{ marginTop: '0.5rem' }}
+            onClick={() => onAddToFavorite(product)}
+          >
+            Favoritar
+          </button>}
         </div>
       </div>
     </div>

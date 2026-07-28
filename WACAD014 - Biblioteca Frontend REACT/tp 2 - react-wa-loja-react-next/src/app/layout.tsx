@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './globals.css'
 
 import { CartProvider } from '../context/CartContext'
+import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider'
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: 'Loja React',
@@ -17,9 +19,12 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body>
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <ReactQueryClientProvider>
+          <CartProvider>
+            {children}
+            <Toaster position="top-right" />
+          </CartProvider>
+        </ReactQueryClientProvider>
       </body>
     </html>
   )

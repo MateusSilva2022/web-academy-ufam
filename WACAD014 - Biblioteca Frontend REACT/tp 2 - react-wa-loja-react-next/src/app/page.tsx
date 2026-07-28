@@ -8,6 +8,7 @@ import ProductList from '../components/ProductList'
 
 import { products } from '../mocks/products'
 import { Product } from '../types/product'
+import { useAddFavorite } from '@/hooks/favorites/useAddFavorite'
 
 export default function Products() {
   const [totalItems, setTotalItems] = useState<number>(0)
@@ -17,6 +18,8 @@ export default function Products() {
     setTotalItems((value) => value + 1)
     setTotalPrice((value) => value + product.price)
   }
+
+  const { addFavorite } = useAddFavorite();
 
   return (
     <>
@@ -36,6 +39,7 @@ export default function Products() {
           <ProductList
             products={products}
             onAddToCart={addToCart}
+            onAddToFavorite={addFavorite}
           />
         </div>
       </main>
