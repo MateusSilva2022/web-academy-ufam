@@ -1,8 +1,8 @@
-import { favoriteApi } from "@/services/api";
+import { favoriteApi } from "@/lib/api";
 import { Product } from "@/types/product";
 
 export async function getFavorites() {
-  const { data } = await favoriteApi.get<Product[]>("/favoritos", {
+  const { data } = await favoriteApi.get<Product[]>("/favorites", {
     headers: {
       "Cache-Control": "no-cache",
       Pragma: "no-cache",
@@ -12,9 +12,14 @@ export async function getFavorites() {
 }
 
 export async function addFavorite(dto: Product) {
-  const rawPrice = dto.preco ?? dto.price ?? 0;
+  const rawProduct = dto as Product & {
+    nome?: string;
+    preco?: string | number;
+  };
+
+  const rawPrice = rawProduct.price ?? rawProduct.preco ?? rawProduct.preco ?? 0;
   const numericPrice = typeof rawPrice === 'string' ? parseFloat(rawPrice) : rawPrice;
-  const productName = dto.nome || dto.name || 'Produto sem nome';
+  const productName = rawProduct.name || rawProduct.nome || 'Produto sem nome';
   const finalPrice = isNaN(numericPrice) ? 0 : numericPrice;
 
   const payload = {
@@ -24,10 +29,10 @@ export async function addFavorite(dto: Product) {
     price: finalPrice,
   };
 
-  const { data } = await favoriteApi.post<Product>("/favoritos", payload);
+  const { data } = await favoriteApi.post<Product>("/favorites", payload);
   return data;
 }
 
 export async function removeFavorite(productId: number | string) {
-  await favoriteApi.delete(`/favoritos/${productId}`);
+  await favoriteApi.delete(`/favorites/${productId}`);
 }

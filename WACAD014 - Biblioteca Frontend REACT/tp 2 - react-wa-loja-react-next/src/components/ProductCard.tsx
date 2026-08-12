@@ -21,8 +21,8 @@ export default function ProductCard({
     router.push(`/product/${product.id}`)
   }
 
-  const imageSrc =
-    product.fotos?.[0]?.src || product.image || '/placeholder.png'
+  // TODO: Gambiarra da desgraça essa
+  const imageSrc = product.fotos?.[0]?.src || product.image || '/placeholder.png'
   const productName = product.nome || product.name || 'Produto sem nome'
   const rawPrice = product.preco ?? product.price ?? 0
   const numericPrice = typeof rawPrice === 'string' ? parseFloat(rawPrice) : rawPrice

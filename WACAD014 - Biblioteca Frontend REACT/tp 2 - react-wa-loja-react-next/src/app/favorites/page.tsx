@@ -37,7 +37,7 @@ export default function FavoritesPage() {
   if (isLoading) {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <main className="container p-5 text-center">
           <div className="spinner-border text-primary my-4" role="status">
             <span className="visually-hidden">Carregando...</span>
@@ -51,7 +51,7 @@ export default function FavoritesPage() {
   if (isError) {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <main className="container p-5 text-center">
           <div className="alert alert-danger" role="alert">
             Erro ao carregar a lista de favoritos. Verifique se o recurso existe no MockAPI.
@@ -63,7 +63,7 @@ export default function FavoritesPage() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
 
       <main>
         <div className="container p-5">

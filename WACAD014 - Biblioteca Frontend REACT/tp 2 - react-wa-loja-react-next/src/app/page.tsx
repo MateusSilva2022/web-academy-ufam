@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import CartSummary from '../components/CartSummary'
 import ProductList from '../components/ProductList'
 
-import { getProducts } from '@/services/products'
+import { getProducts } from '@/services/products.service'
 import { useAddFavorite } from '@/hooks/favorites/useAddFavorite'
 import { Product } from '@/types/product'
 import { useCart } from '@/context/CartContext'
@@ -23,7 +23,7 @@ export default function Products() {
 
 
   const totalPrice = items.reduce((acc, item) => {
-    const rawPrice = item.price ?? item.preco ?? 0
+    const rawPrice = item.price ?? 0 // TODO: Verificar retorno de api
     const numericPrice = typeof rawPrice === 'string' ? parseFloat(rawPrice) : rawPrice
     const validPrice = isNaN(numericPrice) ? 0 : numericPrice
 
@@ -64,7 +64,7 @@ export default function Products() {
         <ProductList
           products={products}
           onAddToCart={addToCart}
-          onAddToFavorite={(prod) => addFavorite(prod)}
+          onAddToFavorite={addFavorite}
         />
       </div>
     </main>

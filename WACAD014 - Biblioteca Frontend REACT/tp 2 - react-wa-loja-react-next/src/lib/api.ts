@@ -5,10 +5,14 @@ export const productsApi = axios.create({
 })
 
 
-export const api = axios.create({
+export const favoriteApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api',
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+// export const favoriteApi = axios.create({
+//   baseURL: 'https://67bc820bed4db4ef00331006.mockapi.io',
+// })

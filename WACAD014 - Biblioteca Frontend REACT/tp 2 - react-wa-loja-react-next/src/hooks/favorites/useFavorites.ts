@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { getFavorites } from "@/services/favorites.service";
 import { Product } from "@/types/product";
 
@@ -13,18 +13,17 @@ export function useFavorites() {
 
     try {
       const data = await getFavorites();
-      setFavorites(data);
+      const parsed = data as Product[];
+      setFavorites(parsed);
+      return parsed;
     } catch {
       setError("Falha ao carregar favoritos");
+      setFavorites([]);
+      return [] as Product[];
     } finally {
       setLoading(false);
     }
   }, []);
-
-
-  useEffect(() => {
-    fetchFavorites();
-  }, [fetchFavorites]);
 
   return {
     favorites,
