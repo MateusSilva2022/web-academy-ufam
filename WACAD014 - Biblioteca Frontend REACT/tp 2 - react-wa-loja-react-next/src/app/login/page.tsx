@@ -1,9 +1,11 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import { login } from '@/services/auth.service'
 
 interface FormularioLogin {
   email: string
@@ -18,10 +20,20 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<FormularioLogin>()
 
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (user) => {
+      localStorage.setItem('@WA-Loja:user', JSON.stringify(user))
+      toast.success('Login realizado com sucesso!')
+      router.push('/')
+    },
+    onError: () => {
+      toast.error('Credenciais inválidas.')
+    },
+  })
+
   const onSubmit = (data: FormularioLogin) => {
-    localStorage.setItem('@WA-Loja:user', JSON.stringify({ email: data.email }))
-    toast.success('Login realizado com sucesso!')
-    router.push('/')
+    loginMutation.mutate(data)
   }
 
   return (
@@ -38,6 +50,10 @@ export default function LoginPage() {
               placeholder="Digite seu e-mail"
               {...register('email', {
                 required: 'O e-mail é obrigatório.',
+                pattern: {
+                  value: /^\S+@\S+\.\S+$/,
+                  message: 'Digite um e-mail válido.',
+                },
               })}
             />
             {errors.email && (
@@ -69,8 +85,12 @@ export default function LoginPage() {
           </div>
 
           <button type="submit" className="btn btn-dark w-100 mt-2 py-2">
-            Entrar
+            {loginMutation.isPending ? 'Entrando...' : 'Entrar'}
           </button>
+
+          {loginMutation.isError && (
+            <p className="text-danger mt-2 mb-0">E-mail ou senha inválidos.</p>
+          )}
         </form>
 
         <div className="text-center mt-3 fs-7">

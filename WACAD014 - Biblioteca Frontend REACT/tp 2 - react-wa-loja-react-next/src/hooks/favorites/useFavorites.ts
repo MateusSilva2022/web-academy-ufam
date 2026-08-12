@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { getStoredUser } from "@/lib/auth";
 import { getFavorites } from "@/services/favorites.service";
 import { Product } from "@/types/product";
 
@@ -12,8 +13,19 @@ export function useFavorites() {
     setError(null);
 
     try {
-      const data = await getFavorites();
-      const parsed = data as Product[];
+      const user = getStoredUser();
+      if (!user?.id) {
+        setFavorites([]);
+        return [] as Product[];
+      }
+
+      const data = await getFavorites({
+        page: 1,
+        limit: 100,
+        userId: user.id,
+      });
+      const items = Array.isArray(data) ? data : data.items;
+      const parsed = items as Product[];
       setFavorites(parsed);
       return parsed;
     } catch {

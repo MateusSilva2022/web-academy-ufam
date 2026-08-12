@@ -1,15 +1,19 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import CartSummary from '../components/CartSummary'
 import ProductList from '../components/ProductList'
 
 import { getProducts } from '@/services/products.service'
 import { useAddFavorite } from '@/hooks/favorites/useAddFavorite'
+import { getStoredUser } from '@/lib/auth'
 import { Product } from '@/types/product'
 import { useCart } from '@/context/CartContext'
+import { toast } from 'sonner'
 
 export default function Products() {
+  const router = useRouter()
   const { items, addToCart } = useCart()
   const { addFavorite } = useAddFavorite()
 
@@ -51,6 +55,17 @@ export default function Products() {
     )
   }
 
+  const handleAddToFavorite = async (product: Product) => {
+    const user = getStoredUser()
+    if (!user?.id) {
+      toast.error('Faça login para favoritar produtos')
+      router.push('/login')
+      return
+    }
+
+    await addFavorite(product)
+  }
+
   return (
     <main>
       <div className="container p-5">
@@ -64,8 +79,9 @@ export default function Products() {
         <ProductList
           products={products}
           onAddToCart={addToCart}
-          onAddToFavorite={addFavorite}
+          onAddToFavorite={handleAddToFavorite}
         />
+
       </div>
     </main>
   )

@@ -7,10 +7,12 @@ export default function Navbar() {
   const pathname = usePathname()
   const router = useRouter()
 
-
   if (pathname === '/login' || pathname === '/register' || pathname === '/cadastro') {
     return null
   }
+
+  const isAuthenticated =
+    typeof window !== 'undefined' && Boolean(localStorage.getItem('@WA-Loja:user'))
 
   const handleLogout = () => {
     localStorage.removeItem('@WA-Loja:user')
@@ -31,22 +33,36 @@ export default function Navbar() {
                 Início
               </Link>
             </li>
-
             <li className="nav-item">
               <Link className="nav-link" href="/cart">
                 Carrinho
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" href="/favorites">
-                Favoritos
-              </Link>
-            </li>
+            {isAuthenticated && (
+              
+              <li className="nav-item">
+                <Link className="nav-link" href="/favorites">
+                  Favoritos
+                </Link>
+              </li>
+
+            )}
           </ul>
 
-          <button className="btn btn-dark" onClick={handleLogout}>
-            Sair
-          </button>
+          {isAuthenticated ? (
+            <button className="btn btn-dark" onClick={handleLogout}>
+              Sair
+            </button>
+          ) : (
+            <div className="d-flex gap-2">
+              <Link className="btn btn-outline-dark" href="/login">
+                Entrar
+              </Link>
+              <Link className="btn btn-dark" href="/register">
+                Cadastrar
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

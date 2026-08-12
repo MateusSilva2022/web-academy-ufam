@@ -1,5 +1,6 @@
 {
     "chat.tools.terminal.autoApprove": {
-        "npm --prefix '/mnt/Arquivos/Workspace/Roger/web-academy-ufam/WACAD014": true
+        "npm --prefix '/mnt/Arquivos/Workspace/Roger/web-academy-ufam/WACAD014": true,
+        "npm run dev": true
     }
 }

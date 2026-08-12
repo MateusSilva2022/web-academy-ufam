@@ -1,14 +1,17 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
+import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import { registerUser } from '@/services/auth.service'
 
 interface FormularioCadastro {
   nome: string
   email: string
   senha: string
+  confirmarSenha: string
 }
 
 export default function RegisterPage() {
@@ -19,10 +22,24 @@ export default function RegisterPage() {
     formState: { errors },
   } = useForm<FormularioCadastro>()
 
+  const registerMutation = useMutation({
+    mutationFn: registerUser,
+    onSuccess: (user) => {
+      localStorage.setItem('@WA-Loja:user', JSON.stringify(user))
+      toast.success('Cadastro realizado com sucesso!')
+      router.push('/')
+    },
+    onError: () => {
+      toast.error('Não foi possível cadastrar. Verifique os dados informados.')
+    },
+  })
+
   const onSubmit = (data: FormularioCadastro) => {
-    localStorage.setItem('@WA-Loja:user', JSON.stringify({ email: data.email, nome: data.nome }))
-    toast.success('Cadastro realizado com sucesso!')
-    router.push('/')
+    registerMutation.mutate({
+      nome: data.nome,
+      email: data.email,
+      senha: data.senha,
+    })
   }
 
   return (
@@ -56,6 +73,10 @@ export default function RegisterPage() {
               placeholder="Digite seu e-mail"
               {...register('email', {
                 required: 'O e-mail é obrigatório.',
+                pattern: {
+                  value: /^\S+@\S+\.\S+$/,
+                  message: 'Digite um e-mail válido.',
+                },
               })}
             />
             {errors.email && (
@@ -86,9 +107,32 @@ export default function RegisterPage() {
             )}
           </div>
 
+          <div className="mb-3">
+            <label className="form-label">Confirmar senha</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Confirme sua senha"
+              {...register('confirmarSenha', {
+                required: 'A confirmação de senha é obrigatória.',
+                validate: (value, formValues) =>
+                  value === formValues.senha || 'As senhas não coincidem.',
+              })}
+            />
+            {errors.confirmarSenha && (
+              <span className="text-danger fs-7 mt-1 d-block">
+                {errors.confirmarSenha.message}
+              </span>
+            )}
+          </div>
+
           <button type="submit" className="btn btn-dark w-100 mt-2 py-2">
-            Cadastrar
+            {registerMutation.isPending ? 'Cadastrando...' : 'Cadastrar'}
           </button>
+
+          {registerMutation.isError && (
+            <p className="text-danger mt-2 mb-0">Erro ao realizar cadastro.</p>
+          )}
         </form>
 
         <div className="text-center mt-3 fs-7">

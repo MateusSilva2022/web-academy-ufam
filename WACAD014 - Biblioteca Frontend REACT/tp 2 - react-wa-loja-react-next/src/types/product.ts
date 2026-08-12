@@ -1,8 +1,14 @@
 export interface Product {
-  id: number
-  name: string
-  price: number
-  image: string
-  quantity: number
+  id: number | string
+  name?: string
+  price?: number | string
+  image?: string
+  quantity?: number
+  nome?: string
+  preco?: number | string
+  fotos?: Array<{
+    src: string
+    titulo?: string
+  }>
 }
 
