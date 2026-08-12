@@ -1,63 +1,76 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
-import { Product } from '../types/product'
-import { products as initialProducts } from '../mocks/products'
+import React, { createContext, useContext, useState, useEffect } from 'react'
+import { Product } from '@/types/product'
 
-interface CartContextType {
-  products: Product[]
+export interface CartItem extends Product {
+  quantity: number
+}
+
+interface CartContextData {
+  items: CartItem[]
   addToCart: (product: Product) => void
-  removeFromCart: (id: number) => void
+  removeFromCart: (id: string | number) => void
+  clearCart: () => void
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined)
+const CartContext = createContext<CartContextData>({} as CartContextData)
 
-interface CartProviderProps {
-  children: ReactNode
-}
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  // Inicialização lazy: lê o localStorage antes do primeiro render no cliente
+  const [items, setItems] = useState<CartItem[]>(() => {
+    if (typeof window !== 'undefined') {
+      const storedCart = localStorage.getItem('@WA-Loja:cart')
+      if (storedCart) {
+        try {
+          return JSON.parse(storedCart)
+        } catch (e) {
+          console.error('Erro ao carregar carrinho do localStorage', e)
+        }
+      }
+    }
+    return []
+  })
 
-export function CartProvider({ children }: CartProviderProps) {
-  const [products, setProducts] = useState<Product[]>(initialProducts)
+ 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('@WA-Loja:cart', JSON.stringify(items))
+    }
+  }, [items])
 
   const addToCart = (product: Product) => {
-    setProducts((current) =>
-      current.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+    setItems((prevItems) => {
+      const existingIndex = prevItems.findIndex(
+        (item) => String(item.id) === String(product.id)
       )
-    )
+      if (existingIndex > -1) {
+        const updated = [...prevItems]
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          quantity: (updated[existingIndex].quantity || 1) + 1,
+        }
+        return updated
+      }
+      return [...prevItems, { ...product, quantity: 1 }]
+    })
   }
 
-  const removeFromCart = (id: number) => {
-    setProducts((current) =>
-      current.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
-          : item
-      )
-    )
+  const removeFromCart = (id: string | number) => {
+    setItems((prevItems) => prevItems.filter((item) => String(item.id) !== String(id)))
+  }
+
+  const clearCart = () => {
+    setItems([])
   }
 
   return (
-    <CartContext.Provider
-      value={{
-        products,
-        addToCart,
-        removeFromCart,
-      }}
-    >
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, clearCart }}>
       {children}
     </CartContext.Provider>
   )
 }
 
 export function useCart() {
-  const context = useContext(CartContext)
-
-  if (!context) {
-    throw new Error('useCart deve ser usado dentro de CartProvider')
-  }
-
-  return context
+  return useContext(CartContext)
 }

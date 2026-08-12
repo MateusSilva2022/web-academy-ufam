@@ -4,6 +4,8 @@ import './globals.css'
 
 import { CartProvider } from '../context/CartContext'
 import { ReactQueryClientProvider } from '@/components/ReactQueryClientProvider'
+import BootstrapClient from '@/components/BootstrapClient'
+import Navbar from '@/components/Navbar'
 import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
@@ -21,7 +23,9 @@ export default function RootLayout({
       <body>
         <ReactQueryClientProvider>
           <CartProvider>
+            <Navbar />
             {children}
+            <BootstrapClient />
             <Toaster position="top-right" />
           </CartProvider>
         </ReactQueryClientProvider>

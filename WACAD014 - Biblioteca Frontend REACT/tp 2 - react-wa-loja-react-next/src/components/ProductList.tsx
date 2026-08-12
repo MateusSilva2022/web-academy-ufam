@@ -12,6 +12,14 @@ export default function ProductList({
   onAddToCart,
   onAddToFavorite,
 }: ProductListProps) {
+  if (!products || products.length === 0) {
+    return (
+      <div className="text-center py-5">
+        <p className="text-muted">Nenhum produto encontrado.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
       {products.map((product) => (
