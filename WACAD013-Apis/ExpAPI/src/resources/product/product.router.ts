@@ -1,13 +1,18 @@
 import { Router } from 'express';
 import productController from './product.controller';
-import isAuth from '../../middlewares/isAuth';
 
 const router = Router();
 
-router.get('/', isAuth, productController.index);
-router.post('/', isAuth, productController.create);
-router.get('/:id', isAuth, productController.read);
-router.put('/:id', isAuth, productController.update);
-router.delete('/:id', isAuth, productController.remove);
+router.get('/', (req, res, next) => {
+  /* #swagger.tags = ['Produto']
+     #swagger.summary = 'Listagem de produtos.' */
+  productController.index(req, res, next);
+});
+
+router.post('/', (req, res, next) => {
+  /* #swagger.tags = ['Produto']
+     #swagger.summary = 'Adiciona um novo produto na base.' */
+  productController.create(req, res, next);
+});
 
 export default router;

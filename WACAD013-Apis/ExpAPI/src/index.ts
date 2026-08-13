@@ -3,10 +3,12 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import { v4 as uuidv4 } from 'uuid';
+import swaggerUi from 'swagger-ui-express';
 
 import v1Router from './router/v1Router';
 import { setLangCookie } from './middlewares/setLangCookie';
 
+const swaggerFile = require('./swagger-output.json');
 const app = express();
 const port = Number(process.env.PORT) || 4455;
 
@@ -24,6 +26,8 @@ app.use(
 );
 
 app.use(setLangCookie);
+
+app.use('/api', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use('/v1', v1Router);
 
